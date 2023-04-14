@@ -1,17 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const moviesController = require('../controllers/moviesController');
+const movieValidation = require("../validations/movieValidation")
 
-router.get('/movies', moviesController.list);
-router.get('/movies/new', moviesController.new);
-router.get('/movies/recommended', moviesController.recomended);
-router.get('/movies/detail/:id', moviesController.detail);
+router.get('/', moviesController.list);
+router.get('/new', moviesController.new);
+router.get('/recommended', moviesController.recomended);
+router.get('/detail/:id', moviesController.detail);
 //Rutas exigidas para la creación del CRUD
-//router.get('/movies/add', moviesController.add);
-//router.post('/movies/create', moviesController.create);
-//router.get('/movies/edit/:id', moviesController.edit);
-//router.post('/movies/update/:id', moviesController.update);
-//router.get('/movies/delete/:id', moviesController.delete);
-//router.post('/movies/delete/:id', moviesController.destroy);
+
+//Agregar pelicula
+router.get('/add', moviesController.add);
+router.post('/create', movieValidation, moviesController.create);
+
+//Editar pelicula
+router.get('/edit/:id', moviesController.edit);
+router.put('/update/:id', movieValidation, moviesController.update);
+
+//Eliminar pelicula
+router.get('/delete/:id', moviesController.delete);
+router.delete('/delete/:id', moviesController.destroy);
 
 module.exports = router;
